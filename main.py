@@ -146,9 +146,6 @@ print(model)
 model, data = model.to(device), data.to(device)
 optimizer = torch.optim.AdamW(params=model.parameters(), weight_decay=0.0, lr=args.lr)
 
-total_params = sum(p.numel() for p in model.parameters())
-print(f"Total number of parameters: {total_params/1e3:.2f}KB")
-
 def train():
     model.train()
     optimizer.zero_grad()

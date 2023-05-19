@@ -2,7 +2,7 @@ import torch
 import torch_geometric.transforms as T
 from torch_geometric.data import Data
 from torch_geometric.datasets import Amazon, Coauthor, Planetoid
-
+from sklearn.metrics import roc_auc_score
 
 def get_dataset(root, dataset, num_val=0.1, num_test=0.8):
     if dataset in {"Photo", "Computers"}:

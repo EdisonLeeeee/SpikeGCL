@@ -14,6 +14,18 @@ This is a PyTorch implementation of SpikeGCL from the paper "A Graph is Worth 1-
 
 ## Reproduction
 
++ Cora
+```
+python main.py --dataset Cora --threshold 5e-4 --outs 4 --bn --timesteps 64
+```
++ Citeseer
+```
+python main.py --dataset Citeseer --threshold 5e-3 --bn
+```
++ Pubmed
+```
+python main.py --dataset Pubmed --threshold 5e-2 --bn
+```
 + Computers
 ```
 python main.py --dataset Computers --threshold 5e-2 --outs 32 --bn 
@@ -30,11 +42,11 @@ python main.py --dataset CS --threshold 5e-2 --outs 64 --timesteps 25 --dropout 
 ```
 python main.py --dataset Physics --timesteps 50 --outs 64 --lr 0.1
 ```
-+ OGBN-Arxiv
++ Ogbn-arXiv
 ```
 python main.py --dataset ogbn-arxiv --timesteps 25 --outs 64 --lr 0.1 --threshold 0.01 --bn
 ```
-+ OGBN-MAG
++ Ogbn-MAG
 ```
 python main.py --dataset ogbn-mag --timesteps 10 --outs 32 --lr 0.001 --threshold 0.01 --bn
 ```

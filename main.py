@@ -86,10 +86,10 @@ def read_parser():
         help="Voltage threshold in spiking neuron. (default: 5e-3)",
     )
     parser.add_argument(
-        "--timesteps",
+        "--T",
         type=int,
         default=32,
-        help="Spiking Time steps. (default: 32)",
+        help="Time steps for spiking neural networks. (default: 32)",
     )
     parser.add_argument(
         "--dropout", type=float, default=0.5, help="Dropout probability. (default: 0.5)"
@@ -131,7 +131,7 @@ model = SpikeGCL(
     data.x.size(1),
     args.hids,
     args.outs,
-    args.timesteps,
+    args.T,
     args.alpha,
     args.surrogate,
     args.threshold,
@@ -142,9 +142,11 @@ model = SpikeGCL(
     args.dropout,
     bn=args.bn,
 )
+
 print(model)
 model, data = model.to(device), data.to(device)
-optimizer = torch.optim.AdamW(params=model.parameters(), weight_decay=0.0, lr=args.lr)
+optimizer = torch.optim.AdamW(params=model.parameters(),
+                              lr=args.lr)
 
 def train():
     model.train()

@@ -43,15 +43,15 @@ class SpikeGCL(torch.nn.Module):
         in_channels: int,
         hidden_channels: int,
         out_channels: int,
-        time_steps: int = 32,
-        alpha=2.0,
-        surrogate="sigmoid",
-        v_threshold=5e-3,
-        snn="PLIF",
-        reset="zero",
-        act="elu",
-        dropedge=0.2,
-        dropout=0.5,
+        T: int = 32,
+        alpha: float = 2.0,
+        surrogate:str="sigmoid",
+        v_threshold:float=5e-3,
+        snn:str="PLIF",
+        reset:str="zero",
+        act:str="elu",
+        dropedge: float=0.2,
+        dropout: float=0.5,
         bn: bool = True,
     ):
         super().__init__()
@@ -66,7 +66,7 @@ class SpikeGCL(torch.nn.Module):
         bn = torch.nn.BatchNorm1d if bn else torch.nn.Identity
 
         in_channels = [
-            x.size(0) for x in torch.chunk(torch.ones(in_channels), time_steps)
+            x.size(0) for x in torch.chunk(torch.ones(in_channels), T)
         ]
         for channel in in_channels:
             self.part_conv.append(GCNConv(channel, hidden_channels))
@@ -78,12 +78,12 @@ class SpikeGCL(torch.nn.Module):
         self.lin = torch.nn.Linear(hidden_channels, out_channels, bias=False)
         self.act = creat_activation_layer(act)
         self.drop_edge = dropedge
-        self.time_steps = time_steps
+        self.T = T
         self.dropout = torch.nn.Dropout(dropout)
         self.reset = reset
 
     def encode(self, x, edge_index, edge_weight=None):
-        chunks = torch.chunk(x, self.time_steps, dim=1)
+        chunks = torch.chunk(x, self.T, dim=1)
         xs = []
         for i, x in enumerate(chunks):
             x = self.dropout(x)

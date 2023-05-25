@@ -22,16 +22,20 @@ def creat_snn_layer(
     surrogate="sigmoid",
     v_threshold=5e-3,
     snn="PLIF",
+    detach_spike=False,
 ):
     tau = 1.0
 
-    if snn == "PLIF":
-        return neuron.PLIF(
-            tau, alpha=alpha, surrogate=surrogate, v_threshold=v_threshold, detach=True
-        )
+    if snn in ["LIF", "PLIF"]:
+        return getattr(neuron, snn)(tau, alpha=alpha, 
+                                    surrogate=surrogate, 
+                                    v_threshold=v_threshold, 
+                                    detach=True, 
+                                    detach_spike=detach_spike,
+                                   )
     elif snn == "IF":
         return neuron.IF(
-            alpha=alpha, surrogate=surrogate, v_threshold=v_threshold, detach=True
+            alpha=alpha, surrogate=surrogate, v_threshold=v_threshold, detach=True, detach_spike=detach_spike,
         )
     else:
         raise ValueError("Unknown SNN")
@@ -53,15 +57,17 @@ class SpikeGCL(torch.nn.Module):
         dropedge: float=0.2,
         dropout: float=0.5,
         bn: bool = True,
+        detach_spike: bool = False,
     ):
         super().__init__()
-        self.part_conv = torch.nn.ModuleList()
-        self.part_bn = torch.nn.ModuleList()
+        self.convs = torch.nn.ModuleList()
+        self.bns = torch.nn.ModuleList()
         self.snn = creat_snn_layer(
             alpha=alpha,
             surrogate=surrogate,
             v_threshold=v_threshold,
             snn=snn,
+            detach_spike=detach_spike,
         )
         bn = torch.nn.BatchNorm1d if bn else torch.nn.Identity
 
@@ -69,8 +75,8 @@ class SpikeGCL(torch.nn.Module):
             x.size(0) for x in torch.chunk(torch.ones(in_channels), T)
         ]
         for channel in in_channels:
-            self.part_conv.append(GCNConv(channel, hidden_channels))
-            self.part_bn.append(bn(channel))
+            self.convs.append(GCNConv(channel, hidden_channels))
+            self.bns.append(bn(channel))
 
         self.shared_bn = bn(hidden_channels)
         self.shared_conv = GCNConv(hidden_channels, hidden_channels)
@@ -87,8 +93,8 @@ class SpikeGCL(torch.nn.Module):
         xs = []
         for i, x in enumerate(chunks):
             x = self.dropout(x)
-            x = self.part_bn[i](x)
-            x = self.part_conv[i](x, edge_index, edge_weight)
+            x = self.bns[i](x)
+            x = self.convs[i](x, edge_index, edge_weight)
             x = self.act(x)
 
             x = self.dropout(x)

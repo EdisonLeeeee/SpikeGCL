@@ -88,8 +88,8 @@ def read_parser():
     parser.add_argument(
         "--T",
         type=int,
-        default=32,
-        help="Time steps for spiking neural networks. (default: 32)",
+        default=30,
+        help="Time steps for spiking neural networks. (default: 30)",
     )
     parser.add_argument(
         "--dropout", type=float, default=0.5, help="Dropout probability. (default: 0.5)"
@@ -108,6 +108,8 @@ def read_parser():
     )
     parser.add_argument('--bn', action='store_true',
                     help='Whether to use batch normalization. (default: False)')
+    parser.add_argument('--detach_spike', action='store_true',
+                    help='Whether to detach gradients from spikes. (default: False)')    
     try:
         args = parser.parse_args()
         tab_printer(args)
@@ -141,6 +143,7 @@ model = SpikeGCL(
     args.dropedge,
     args.dropout,
     bn=args.bn,
+    detach_spike=args.detach_spike,
 )
 
 print(model)

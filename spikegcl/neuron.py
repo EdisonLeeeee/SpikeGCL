@@ -148,13 +148,11 @@ SURROGATE = {
 class IF(nn.Module):
     def __init__(
         self, v_threshold=1.0, v_reset=0.0, alpha=1.0, surrogate="triangle", detach=True,
-        detach_spike=False,
     ):
         super().__init__()
         self.v_threshold = v_threshold
         self.v_reset = v_reset
         self.detach = detach
-        self.detach_spike = detach_spike
         self.surrogate = SURROGATE.get(surrogate)
         self.register_buffer("alpha", torch.as_tensor(alpha, dtype=torch.float32))
         self.v = 0.0
@@ -180,10 +178,7 @@ class IF(nn.Module):
             detached_spike = spike
         # 3. reset
         self.v = (1 - detached_spike) * v + detached_spike * self.v_reset
-        if self.detach_spike:
-            return detached_spike
-        else:
-            return spike
+        return spike
 
 class LIF(nn.Module):
     def __init__(
@@ -194,13 +189,11 @@ class LIF(nn.Module):
         alpha=1.0,
         surrogate="triangle",
         detach=True,
-        detach_spike=False,
     ):
         super().__init__()
         self.v_threshold = v_threshold
         self.v_reset = v_reset
         self.detach = detach
-        self.detach_spike = detach_spike
         self.surrogate = SURROGATE.get(surrogate)
         self.register_buffer("tau", torch.as_tensor(tau, dtype=torch.float32))
         self.register_buffer("alpha", torch.as_tensor(alpha, dtype=torch.float32))
@@ -227,10 +220,7 @@ class LIF(nn.Module):
             detached_spike = spike
         # 3. reset
         self.v = (1 - detached_spike) * v + detached_spike * self.v_reset
-        if self.detach_spike:
-            return detached_spike
-        else:
-            return spike
+        return spike
         
 class PLIF(nn.Module):
     def __init__(
@@ -241,13 +231,11 @@ class PLIF(nn.Module):
         alpha=1.0,
         surrogate="triangle",
         detach=True,
-        detach_spike=False,
     ):
         super().__init__()
         self.v_threshold = v_threshold
         self.v_reset = v_reset
         self.detach = detach
-        self.detach_spike = detach_spike
         self.surrogate = SURROGATE.get(surrogate)
         self.register_parameter(
             "tau", nn.Parameter(torch.as_tensor(tau, dtype=torch.float32))
@@ -277,7 +265,4 @@ class PLIF(nn.Module):
             detached_spike = spike
         # 3. reset
         self.v = (1 - detached_spike) * v + detached_spike * self.v_reset
-        if self.detach_spike:
-            return detached_spike
-        else:
-            return spike
+        return spike

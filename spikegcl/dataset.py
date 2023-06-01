@@ -19,9 +19,7 @@ def get_dataset(root, dataset, num_val=0.1, num_test=0.8):
     elif dataset in ["ogbn-arxiv", "ogbn-mag"]:
         from ogb.nodeproppred import PygNodePropPredDataset
         if dataset == "ogbn-mag":
-            dataset = PygNodePropPredDataset(
-            root=root, name=dataset, transform=T.ToUndirected()
-        )
+            dataset = PygNodePropPredDataset(root=root, name=dataset)
             # We are only interested in paper <-> paper relations.
             rel_data = dataset[0]
             
@@ -31,6 +29,7 @@ def get_dataset(root, dataset, num_val=0.1, num_test=0.8):
                 y=rel_data.y_dict["paper"],
             )
             data.y = data.y.squeeze()
+            data = T.ToUndirected()(data)
             train_mask = torch.zeros(data.y.size(0), dtype=torch.bool)
             val_mask = torch.zeros(data.y.size(0), dtype=torch.bool)
             test_mask = torch.zeros(data.y.size(0), dtype=torch.bool)

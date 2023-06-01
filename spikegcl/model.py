@@ -22,7 +22,6 @@ def creat_snn_layer(
     surrogate="sigmoid",
     v_threshold=5e-3,
     snn="PLIF",
-    detach_spike=False,
 ):
     tau = 1.0
 
@@ -31,11 +30,10 @@ def creat_snn_layer(
                                     surrogate=surrogate, 
                                     v_threshold=v_threshold, 
                                     detach=True, 
-                                    detach_spike=detach_spike,
                                    )
     elif snn == "IF":
         return neuron.IF(
-            alpha=alpha, surrogate=surrogate, v_threshold=v_threshold, detach=True, detach_spike=detach_spike,
+            alpha=alpha, surrogate=surrogate, v_threshold=v_threshold, detach=True,
         )
     else:
         raise ValueError("Unknown SNN")
@@ -57,7 +55,6 @@ class SpikeGCL(torch.nn.Module):
         dropedge: float=0.2,
         dropout: float=0.5,
         bn: bool = True,
-        detach_spike: bool = False,
     ):
         super().__init__()
         self.convs = torch.nn.ModuleList()
@@ -67,7 +64,6 @@ class SpikeGCL(torch.nn.Module):
             surrogate=surrogate,
             v_threshold=v_threshold,
             snn=snn,
-            detach_spike=detach_spike,
         )
         bn = torch.nn.BatchNorm1d if bn else torch.nn.Identity
 

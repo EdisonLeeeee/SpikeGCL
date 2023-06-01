@@ -108,8 +108,6 @@ def read_parser():
     )
     parser.add_argument('--bn', action='store_true',
                     help='Whether to use batch normalization. (default: False)')
-    parser.add_argument('--detach_spike', action='store_true',
-                    help='Whether to detach gradients from spikes. (default: False)')    
     try:
         args = parser.parse_args()
         tab_printer(args)
@@ -143,7 +141,6 @@ model = SpikeGCL(
     args.dropedge,
     args.dropout,
     bn=args.bn,
-    detach_spike=args.detach_spike,
 )
 
 print(model)

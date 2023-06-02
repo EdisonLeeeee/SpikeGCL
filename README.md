@@ -52,5 +52,5 @@ python main.py --dataset ogbn-arxiv --T 15 --outs 32 --threshold 5e-2 --bn
 ```
 + Ogbn-MAG
 ```
-python main.py --dataset ogbn-mag --T 15 --outs 32 --hids 32 --threshold 5e-3 --bn
+python main.py --dataset ogbn-mag --T 15 --outs 32 --threshold 5e-3 --bn
 ```

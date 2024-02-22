@@ -4,7 +4,7 @@
 
 Jintang Li<sup>1</sup>, Huizhe Zhang<sup>1</sup>, Ruofan Wu<sup>2</sup>, Zulun Zhu<sup>3</sup>, Baokun Wang<sup>2</sup>, Changhua Meng<sup>2</sup>, Zibin Zheng<sup>1</sup>, Liang Chen<sup>1</sup>
 
-<sup>1</sup>  Sun Yat-sen University, <sup>2</sup>  Ant Group, <sup>2</sup> Nanyang Technological University
+<sup>1</sup>Sun Yat-sen University, <sup>2</sup>Ant Group, <sup>3</sup>Nanyang Technological University
  
 
 arXiv ([arXiv:2305.19306](https://arxiv.org/abs/2305.19306)),

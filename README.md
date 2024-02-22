@@ -66,3 +66,17 @@ python main.py --dataset ogbn-arxiv --T 15 --outs 32 --threshold 5e-2 --bn
 ```
 python main.py --dataset ogbn-mag --T 15 --outs 32 --threshold 5e-3 --bn
 ```
+
+## Citation
+If you find this repository useful in your research, please consider giving a star ⭐ and a citation
+
+```bibtex
+@inproceedings{
+li2024a,
+title={A Graph is Worth 1-bit Spikes: When Graph Contrastive Learning Meets Spiking Neural Networks},
+author={Jintang Li and Huizhe Zhang and Ruofan Wu and Zulun Zhu and Baokun Wang and Changhua Meng and Zibin Zheng and Liang Chen},
+booktitle={The Twelfth International Conference on Learning Representations},
+year={2024},
+url={https://openreview.net/forum?id=LnLySuf1vp}
+}
+```

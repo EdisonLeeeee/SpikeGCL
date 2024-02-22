@@ -1,9 +1,21 @@
-## SpikeGCL (Under review)
-This is a PyTorch implementation of SpikeGCL from the paper "A Graph is Worth 1-bit Spikes: When Graph Contrastive Learning Meets Spiking Neural Networks".
+<div align="center">
+<h1>SpikeGCL</h1>
+<h3>A Graph is Worth 1-bit Spikes: When Graph Contrastive Learning Meets Spiking Neural Networks</h3>
+
+Jintang Li<sup>1</sup>, Huizhe Zhang<sup>1</sup>, Ruofan Wu<sup>2</sup>, Zulun Zhu<sup>3</sup>, Baokun Wang<sup>2</sup>, Changhua Meng<sup>2</sup>, Zibin Zheng<sup>1</sup>, Liang Chen<sup>1</sup>
+
+<sup>1</sup>  Sun Yat-sen University, <sup>2</sup>  Ant Group, <sup>2</sup> Nanyang Technological University
+ 
+
+arXiv ([arXiv:2305.19306](https://arxiv.org/abs/2305.19306)),
+OpenReview ([ICLR'24](https://openreview.net/forum?id=LnLySuf1vp))
+
+</div>
 
 <div align="center">
   <img src="imgs/spikegcl.png"/>
 </div>
+
 
 ## Environments
 + numpy == 1.23.3

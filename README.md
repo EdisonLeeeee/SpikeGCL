@@ -1,5 +1,5 @@
 <div align="center">
-<h1>SpikeGCL</h1>
+<h1>0️⃣1️⃣ SpikeGCL (Spiking Graph Contrastive Learning)</h1>
 <h3>A Graph is Worth 1-bit Spikes: When Graph Contrastive Learning Meets Spiking Neural Networks</h3>
 
 Jintang Li<sup>1</sup>, Huizhe Zhang<sup>1</sup>, Ruofan Wu<sup>2</sup>, Zulun Zhu<sup>3</sup>, Baokun Wang<sup>2</sup>, Changhua Meng<sup>2</sup>, Zibin Zheng<sup>1</sup>, Liang Chen<sup>1</sup>
@@ -18,6 +18,10 @@ OpenReview ([ICLR'24](https://openreview.net/forum?id=LnLySuf1vp))
 
 
 ## Environments
+
+> [!NOTE]
+> Higher versions should be also compatible.
+
 + numpy == 1.23.3
 + torch == 1.8+cu111
 + torch-cluster == 1.6.1
@@ -32,15 +36,15 @@ OpenReview ([ICLR'24](https://openreview.net/forum?id=LnLySuf1vp))
 
 + Cora
 ```
-python main.py --dataset Cora --threshold 5e-4 --outs 4 --bn --T 64
+python main.py --dataset Cora --threshold 5e-4 --outs 2 --T 64 --bn --epochs 5
 ```
 + Citeseer
 ```
-python main.py --dataset Citeseer --threshold 5e-3 --bn --T 64
+python main.py --dataset Citeseer --threshold 5e-3 --T 32 --bn --epochs 5
 ```
 + Pubmed
 ```
-python main.py --dataset Pubmed --threshold 5e-2 --bn --T 32
+python main.py --dataset Pubmed --threshold 5e-2 --bn --T 32 --epochs 50
 ```
 + Computers
 ```
@@ -48,7 +52,7 @@ python main.py --dataset Computers --threshold 5e-2 --outs 32 --bn --T 25
 ```
 + Photo 
 ```
-python main.py --dataset Photo --threshold 5e-2 --T 15 --bn --outs 8
+python main.py --dataset Photo --threshold 5e-2 --T 15 --bn --outs 8 --epochs 50
 ```
 + CS
 ```
@@ -56,15 +60,15 @@ python main.py --dataset CS --threshold 5e-1 --outs 32 --T 60 --dropout 0. --bn
 ```
 + Physics 
 ```
-python main.py --dataset Physics --T 25 --outs 16 --bn --margin 1.0 --threshold 5e-2
+python main.py --dataset Physics --T 25 --outs 16 --margin 1 --threshold 5e-2 --bn
 ```
 + Ogbn-arXiv
 ```
-python main.py --dataset ogbn-arxiv --T 15 --outs 32 --threshold 5e-2 --bn
+python main.py --dataset ogbn-arxiv --T 30 --outs 1 --threshold 5e-2 --no_shuffle --bn --dropout 0.
 ```
 + Ogbn-MAG
 ```
-python main.py --dataset ogbn-mag --T 15 --outs 32 --threshold 5e-3 --bn
+python main.py --dataset ogbn-mag --T 8 --outs 8 --hids 64 --threshold 5e-3 --no_shuffle --bn
 ```
 
 ## Citation

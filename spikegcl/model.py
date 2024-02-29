@@ -2,7 +2,7 @@ from spikegcl import neuron
 import torch
 
 from torch_geometric.nn import GCNConv, SAGEConv, GATConv
-from torch_geometric.utils import dropout_edge, mask_feature
+from torch_geometric.utils import dropout_edge, mask_feature, to_torch_sparse_tensor
 import torch.nn.functional as F
 
 
@@ -26,11 +26,11 @@ def creat_snn_layer(
     tau = 1.0
 
     if snn in ["LIF", "PLIF"]:
-        return getattr(neuron, snn)(tau, alpha=alpha, 
-                                    surrogate=surrogate, 
-                                    v_threshold=v_threshold, 
-                                    detach=True, 
-                                   )
+        return getattr(neuron, snn)(tau, alpha=alpha,
+                                    surrogate=surrogate,
+                                    v_threshold=v_threshold,
+                                    detach=True,
+                                    )
     elif snn == "IF":
         return neuron.IF(
             alpha=alpha, surrogate=surrogate, v_threshold=v_threshold, detach=True,
@@ -47,13 +47,14 @@ class SpikeGCL(torch.nn.Module):
         out_channels: int,
         T: int = 32,
         alpha: float = 2.0,
-        surrogate:str="sigmoid",
-        v_threshold:float=5e-3,
-        snn:str="PLIF",
-        reset:str="zero",
-        act:str="elu",
-        dropedge: float=0.2,
-        dropout: float=0.5,
+        surrogate: str = "sigmoid",
+        v_threshold: float = 5e-3,
+        snn: str = "PLIF",
+        reset: str = "zero",
+        act: str = "elu",
+        dropedge: float = 0.2,
+        dropout: float = 0.5,
+        shuffle: bool = True,
         bn: bool = True,
     ):
         super().__init__()
@@ -83,9 +84,11 @@ class SpikeGCL(torch.nn.Module):
         self.T = T
         self.dropout = torch.nn.Dropout(dropout)
         self.reset = reset
+        self.shuffle = shuffle
 
     def encode(self, x, edge_index, edge_weight=None):
         chunks = torch.chunk(x, self.T, dim=1)
+        edge_index = to_torch_sparse_tensor(edge_index, size=x.size(0))
         xs = []
         for i, x in enumerate(chunks):
             x = self.dropout(x)
@@ -115,7 +118,10 @@ class SpikeGCL(torch.nn.Module):
         else:
             edge_weight2 = None
 
-        x2 = x[:, torch.randperm(x.size(1))]
+        if self.shuffle:
+            x2 = x[:, torch.randperm(x.size(1))]
+        else:
+            x2 = x
 
         s1 = self.encode(x, edge_index, edge_weight)
         s2 = self.encode(x2, edge_index2, edge_weight2)

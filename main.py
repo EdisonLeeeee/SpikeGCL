@@ -13,7 +13,7 @@ from torch_geometric.logging import log
 def read_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "--root", type=str, default="~/public_data/pyg_data", help="Data folder"
+        "--root", type=str, default="data/", help="Data folder"
     )
     parser.add_argument(
         "--dataset",
@@ -43,8 +43,8 @@ def read_parser():
     parser.add_argument(
         "--epochs",
         type=int,
-        default=50,
-        help="Number of training epochs. (default: 50)",
+        default=20,
+        help="Number of training epochs. (default: 20)",
     )
     parser.add_argument(
         "--seed", type=int, default=2023, help="Random seed for model. (default: 2023)"
@@ -108,6 +108,8 @@ def read_parser():
     )
     parser.add_argument('--bn', action='store_true',
                     help='Whether to use batch normalization. (default: False)')
+    parser.add_argument('--no_shuffle', action='store_true',
+                    help='Whether to perform feature shuffling augmentation. (default: False)')    
     try:
         args = parser.parse_args()
         tab_printer(args)
@@ -141,6 +143,7 @@ model = SpikeGCL(
     args.dropedge,
     args.dropout,
     bn=args.bn,
+    shuffle=not args.no_shuffle,
 )
 
 print(model)

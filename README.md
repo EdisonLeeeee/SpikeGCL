@@ -13,7 +13,7 @@ OpenReview ([ICLR'24](https://openreview.net/forum?id=LnLySuf1vp))
 </div>
 
 <div align="center">
-  <img src="imgs/spikegcl.png"/>
+  <img src="imgs/comparison.png"/>
 </div>
 
 
@@ -31,6 +31,19 @@ OpenReview ([ICLR'24](https://openreview.net/forum?id=LnLySuf1vp))
 + CUDA 11.1
 + cuDNN 8.0.5
 
+## Model and Results
+
+SpikeGCL adopts a simple GCL architecture and is comprised of a set of peer GNN encoders and a spiking neuron.
+
+<div align="center">
+  <img src="imgs/spikegcl.png"/>
+</div>
+
+The following tables present the performance & efficiency results for standard node classification tasks on several graph benchmark datasets.
+<div align="center">
+  <img src="imgs/tab1.png"/>
+  <img src="imgs/tab2.png"/>
+</div>
 
 ## Reproduction
 

@@ -13,7 +13,7 @@ OpenReview ([ICLR'24](https://openreview.net/forum?id=LnLySuf1vp))
 </div>
 
 <div align="center">
-  <img src="imgs/comparison.png"/>
+  <img width="504" src="imgs/comparison.png"/>
 </div>
 
 

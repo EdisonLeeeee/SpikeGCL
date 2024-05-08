@@ -10,6 +10,8 @@ Jintang Li<sup>1</sup>, Huizhe Zhang<sup>1</sup>, Ruofan Wu<sup>2</sup>, Zulun Z
 arXiv ([arXiv:2305.19306](https://arxiv.org/abs/2305.19306)),
 OpenReview ([ICLR'24](https://openreview.net/forum?id=LnLySuf1vp))
 
+[Poster](https://iclr.cc/media/PosterPDFs/ICLR%202024/18850.png?t=1713083679.2213657) | [Slides](https://iclr.cc/media/iclr-2024/Slides/18850.pdf)
+
 </div>
 
 <div align="center">
